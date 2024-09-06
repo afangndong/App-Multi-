@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: articles
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: articles
+  template:
+    metadata:
+      labels:
+        app: articles
+    spec:
+      containers:
+      - name: articles
+        image: afangndong/apps-multi-users:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: articles
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: articles
